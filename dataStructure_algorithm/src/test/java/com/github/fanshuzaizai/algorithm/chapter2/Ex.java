@@ -6,6 +6,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+import java.util.Random;
+
 /**
  * @author Jzy.
  * @date 2019/7/12 11:50
@@ -14,7 +19,40 @@ import org.junit.runners.JUnit4;
 public class Ex {
 
     @Test
-    public void quick(){
+    public void test() {
+        String a = "aaa";
+        PriorityQueue<Integer> priorityQueue = new PriorityQueue<>((o1, o2) -> {
+            if (o1 < o2) {
+                return 1;
+            } else if (o1 > o2) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        priorityQueue.add(12);
+        System.out.println(priorityQueue);
+        priorityQueue.add(14);
+        System.out.println(priorityQueue);
+        priorityQueue.add(15);
+        System.out.println(priorityQueue);
+        priorityQueue.add(5);
+        System.out.println(priorityQueue);
+        priorityQueue.add(3);
+        System.out.println(priorityQueue);
+        priorityQueue.add(7);
+        System.out.println(priorityQueue);
+
+        System.out.println(priorityQueue.poll());
+        System.out.println(priorityQueue);
+
+        System.out.println(priorityQueue.peek());
+        System.out.println(priorityQueue);
+
+    }
+
+    @Test
+    public void quick() {
 
         int[] arr = ArrayUtil.generateArr(10000000, 5);
         int[] arr2 = arr.clone();
@@ -32,7 +70,7 @@ public class Ex {
     }
 
     @Test
-    public void insret(){
+    public void insret() {
 
         int[] arr = ArrayUtil.generateArr(50000000, 10000);
         int[] arr2 = arr.clone();
@@ -60,6 +98,23 @@ public class Ex {
         stopWatch4.over();
         ArrayUtil.isSort(arr4);
 
+    }
+
+    @Test
+    public void binary() {
+        Random random = new Random();
+        BinaryHeap binaryHeap = new BinaryHeap();
+
+        int length = 20;
+        int[] arr = new int[length];
+        for (int i = 0; i < length; i++) {
+            arr[i] = random.nextInt(100);
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            binaryHeap.insert(arr[i]);
+        }
+        binaryHeap.print();
 
     }
 

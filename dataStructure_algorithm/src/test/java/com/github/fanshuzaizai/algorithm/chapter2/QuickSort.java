@@ -6,6 +6,7 @@ import java.util.Arrays;
 
 /**
  * 快速排序
+ * 取一个分界元素，左边的都比它小，右边的都比它大
  *
  * @author Jzy.
  * @date 2019/7/12 11:05
