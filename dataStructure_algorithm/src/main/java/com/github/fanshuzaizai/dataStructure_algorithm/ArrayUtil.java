@@ -1,5 +1,6 @@
 package com.github.fanshuzaizai.dataStructure_algorithm;
 
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -7,6 +8,18 @@ import java.util.Random;
  * @date 2019/7/12 11:05
  */
 public class ArrayUtil {
+
+    public static void exchange(Integer[] arr, int x, int y) {
+        if (x == y) {
+            return;
+        }
+        if (Objects.equals(arr[x], arr[y])) {
+            return;
+        }
+        Integer tmp = arr[x];
+        arr[x] = arr[y];
+        arr[y] = tmp;
+    }
 
     public static void exchange(int[] arr, int x, int y) {
         if (x == y) {
