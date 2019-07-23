@@ -46,20 +46,7 @@ public class RedBlackTree<K extends Comparable<K>, V> {
             return n;
         }
 
-        //右节点是红色
-        if (!isRed(n.left) && isRed(n.right)) {
-            n = rotateLeft(n);
-        }
-        //连续两个左节点是红色
-        if (isRed(n.left) && isRed(n.left.left)) {
-            n = rotateRight(n);
-        }
-        //两个子节点都是红色
-        if (isRed(n.left) && isRed(n.right)) {
-            flipColor(n);
-        }
-        calculateSize(n);
-        return n;
+        return balance(n);
     }
 
     public int size() {
@@ -73,6 +60,11 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     private boolean isRed(Node n) {
         return n != null && n.color == RED;
     }
+
+    private boolean isBlack(Node n) {
+        return n != null && n.color == BLACK;
+    }
+
 
     /**
      * 将红色的右子节点旋转成左边
@@ -135,20 +127,20 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     }
 
     /**
-     * 将两个子节点都是红色的节点转换成：自己是红色，两个子节点是黑色
+     * 旋转当前节点和子节点的颜色
      *
      * @param n
      */
     public void flipColor(Node n) {
-        if (n == null || !isRed(n.left) || !isRed(n.right)) {
-            throw new IllegalArgumentException();
-        }
-        n.color = RED;
-        n.left.color = BLACK;
-        n.right.color = BLACK;
+        n.color = !n.color;
+        n.left.color = !n.left.color;
+        n.right.color = !n.right.color;
     }
 
-    public void delMin(K k) {
+    /**
+     * 删除最小值
+     */
+    public void delMin() {
         if (root == null) {
             return;
         }
@@ -156,26 +148,182 @@ public class RedBlackTree<K extends Comparable<K>, V> {
         if (isRed(root.left) && isRed(root.right)) {
             root.color = BLACK;
         }
-        root = delMin(k, root);
+        root = delMin(root);
 
         if (root != null) {
             root.color = BLACK;
         }
     }
 
-    public Node delMin(K k, Node n) {
+    private Node delMin(Node n) {
+        //如果左子节点为空，右子节点一定也为空，可以直接删除
         if (n.left == null) {
             return null;
         }
-        if (!isRed(n.left) && !isRed(n.left.left)) {
+        //如果当前节点和左子节点都不是3-节点
+        if (isBlack(n.left) && !isRed(n.left.left)) {
+            n = moveRedLeft(n);
+        }
+        n.left = delMin(n.left);
 
+        return balance(n);
+    }
+
+    public void delMax() {
+        if (root == null) {
+            return;
+        }
+        //将root节点转成一个普通节点的规则
+        if (isRed(root.left) && isRed(root.right)) {
+            root.color = BLACK;
+        }
+        root = delMax(root);
+
+        if (root != null) {
+            root.color = BLACK;
+        }
+    }
+
+    private Node delMax(Node n) {
+        //如果左子节点是红色，则右旋
+        if (isRed(n.left)) {
+            n = rotateRight(n);
+        }
+        //如果右子节点为空，左子节点一定也为空，可以直接删除当前节点
+        if (n.right == null) {
+            return null;
+        }
+        //如果当前节点和右子节点都不是3-节点
+        if (!isRed(n.right) && !isRed(n.right.left)) {
+            n = moveRedRight(n);
+        }
+        n.right = delMax(n.right);
+
+        return balance(n);
+    }
+
+    public void delete(K k) {
+        if (root == null) {
+            return;
+        }
+        //将root节点转成一个普通节点的规则
+        if (isRed(root.left) && isRed(root.right)) {
+            root.color = BLACK;
+        }
+        root = delete(k, root);
+
+        if (root != null) {
+            root.color = BLACK;
+        }
+    }
+
+    private Node delete(K k, Node n) {
+        /*
+        保证左节点或右节点
+         */
+        if (k.compareTo(n.k) < 0) {
+            //左边已经没有了，说明不存在
+            if (n.left == null) {
+                return n;
+            } else {
+                if (isBlack(n.left) && !isRed(n.left.left))
+                    n = moveRedLeft(n);
+                n.left = delete(k, n.left);
+            }
+        } else {
+            //类似删除最大节点
+            if (isRed(n.left)) {
+                n = rotateRight(n);
+            }
+            //如果右节点不存在，左节点一定也没有，所以是一个孤立的节点
+            if (n.right == null) {
+                //找到节点，删除
+                if (k.compareTo(n.k) == 0) {
+                    return null;
+                } else {//没找到，原路返回
+                    return n;
+                }
+            } else {
+                //构建一个右3-节点
+                if (isBlack(n.right) && !isRed(n.right.left)) {
+                    n = moveRedRight(n);
+                }
+                //找到了
+                if (k.compareTo(n.k) == 0) {
+                    //右子节点中最小的节点(和当前节点最接近的节点)
+                    Node closest = min(n.right);
+                    //替换给当前节点
+                    n.k = closest.k;
+                    n.v = closest.v;
+                    //再把这个节点(closest)删除
+                    n.right = delMin(n.right);
+                } else {
+                    n.right = delete(k, n.right);
+                }
+            }
         }
 
+        return balance(n);
+    }
+
+    private Node min(Node n) {
+        if (n.left == null) {
+            return n;
+        } else {
+            return min(n.left);
+        }
+    }
+
+    /**
+     * @param n
+     * @return
+     */
+    private Node moveRedLeft(Node n) {
+        //将当前节点转成一个4-节点（2个子节点都是红色）
+        flipColor(n);
+
+        //如果右子节点的左子节点是红色
+        if (n.right != null && isRed(n.right.left)) {
+            //右子节点右旋，和当前节点组成一个5-节点（一共4个平级节点）
+            n.right = rotateRight(n.right);
+            //将当前节点由5-节点中的第2个左旋成第3个
+            n = rotateLeft(n);
+            //将当前元素变成上级，最终转换成，左子节点2个（3-节点），右子节点1个
+            flipColor(n);
+        }
         return n;
     }
 
-    private
+    private Node moveRedRight(Node n) {
+        //将当前节点转成一个4-节点（2个子节点都是红色）
+        flipColor(n);
 
+        //如果左子节点的左子节点是红色，说明当前节点是一个5-节点(一个4个平级节点),当前节点处于第3个
+        if (n.left != null && isRed(n.left.left)) {
+            //将当前节点由5-节点中的第3个右旋成第2个
+            n = rotateRight(n);
+            //将当前元素变成上级，最终转换成，左子节点1个，右子节点2个（3-节点）
+            flipColor(n);
+        }
+        return n;
+    }
+
+    private Node balance(Node n) {
+        //右节点是红色
+        if (!isRed(n.left) && isRed(n.right)) {
+            n = rotateLeft(n);
+        }
+        //连续两个左节点是红色
+        if (isRed(n.left) && isRed(n.left.left)) {
+            n = rotateRight(n);
+        }
+        //两个子节点都是红色
+        if (isRed(n.left) && isRed(n.right)) {
+            flipColor(n);
+        }
+        calculateSize(n);
+        return n;
+    }
 
     private void calculateSize(Node n) {
         n.size = size(n.left) + size(n.right) + 1;
@@ -222,47 +370,38 @@ public class RedBlackTree<K extends Comparable<K>, V> {
     public static void main(String[] args) {
 
 
-        RedBlackTree<String, String> tree1 = new RedBlackTree<>();
-        tree1.put("A", "A");
-        tree1.put("C", "C");
-        tree1.put("E", "E");
-        tree1.put("H", "H");
-        tree1.put("L", "L");
-        tree1.put("M", "M");
-        tree1.put("P", "P");
-        tree1.put("R", "R");
-        tree1.put("S", "S");
-        tree1.put("X", "X");
-        tree1.put("X", "XX");
-
-        System.out.println(tree1);
-
-
-        if (true) {
-            return;
-        }
-
         RedBlackTree<String, String> tree = new RedBlackTree<>();
-        RedBlackTree.Node a = tree.new Node("A", "A", 1, BLACK, null, null);
-        RedBlackTree.Node b = tree.new Node("B", "B", 5, BLACK, null, null);
-        RedBlackTree.Node c = tree.new Node("C", "C", 1, BLACK, null, null);
-        RedBlackTree.Node d = tree.new Node("D", "D", 3, RED, null, null);
-        RedBlackTree.Node e = tree.new Node("E", "E", 1, BLACK, null, null);
 
-        d.left = c;
-        d.right = e;
-        b.left = a;
-        b.right = d;
+        tree.put("S", "S");
+        tree.put("E", "E");
+        tree.put("A", "A");
+        tree.put("R", "R");
+        tree.put("C", "C");
+        tree.put("H", "H");
+        tree.put("X", "X");
+        tree.put("M", "M");
+        tree.put("P", "P");
+        tree.put("L", "L");
+        System.out.println(tree);
 
-        System.out.println(b);
+        tree.delete("H");
+        System.out.println(tree);
 
-        RedBlackTree.Node node = tree.rotateLeft(b);
+        tree.delete("M");
+        System.out.println(tree);
 
-        System.out.println(node);
+        tree.delMax();
+        System.out.println(tree);
+        System.out.println("===");
 
-        RedBlackTree.Node node2 = tree.rotateRight(node);
+        tree.delete("E");
+        System.out.println(tree);
+        tree.delete("E");
+        System.out.println(tree);
+//        tree.delMin();
+//        System.out.println(tree);
 
-        System.out.println(node2);
+
 
 
     }
