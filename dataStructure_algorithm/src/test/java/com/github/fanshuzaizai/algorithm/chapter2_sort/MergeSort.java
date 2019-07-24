@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter2;
+package com.github.fanshuzaizai.algorithm.chapter2_sort;
 
 /**
  * 归并排序

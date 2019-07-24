@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter1;
+package com.github.fanshuzaizai.algorithm.chapter1_base;
 
 import com.github.fanshuzaizai.dataStructure_algorithm.StopWatch;
 import org.apache.commons.io.IOUtils;

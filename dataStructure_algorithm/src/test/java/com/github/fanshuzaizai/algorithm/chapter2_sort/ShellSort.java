@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter2;
+package com.github.fanshuzaizai.algorithm.chapter2_sort;
 
 /**
  * 根据插入排序进行修改，每次进行部分排序

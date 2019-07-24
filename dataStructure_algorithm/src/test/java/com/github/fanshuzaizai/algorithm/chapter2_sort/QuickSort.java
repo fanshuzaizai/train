@@ -1,8 +1,6 @@
-package com.github.fanshuzaizai.algorithm.chapter2;
+package com.github.fanshuzaizai.algorithm.chapter2_sort;
 
 import com.github.fanshuzaizai.dataStructure_algorithm.ArrayUtil;
-
-import java.util.Arrays;
 
 /**
  * 快速排序

@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter2;
+package com.github.fanshuzaizai.algorithm.chapter2_sort;
 
 import com.github.fanshuzaizai.dataStructure_algorithm.ArrayUtil;
 import com.github.fanshuzaizai.dataStructure_algorithm.StopWatch;
@@ -6,8 +6,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Random;
 

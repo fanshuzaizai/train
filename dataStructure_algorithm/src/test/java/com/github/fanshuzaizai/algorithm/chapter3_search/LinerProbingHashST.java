@@ -1,8 +1,6 @@
-package com.github.fanshuzaizai.algorithm.chapter3;
+package com.github.fanshuzaizai.algorithm.chapter3_search;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
-import java.util.HashMap;
 
 /**
  * 线性探测符号表

@@ -1,6 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter3;
-
-import java.util.HashMap;
+package com.github.fanshuzaizai.algorithm.chapter3_search;
 
 /**
  * 类似 平衡查找树

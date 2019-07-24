@@ -1,18 +1,11 @@
-package com.github.fanshuzaizai.algorithm.chapter1;
+package com.github.fanshuzaizai.algorithm.chapter1_base;
 
-import com.github.fanshuzaizai.dataStructure_algorithm.StopWatch;
-import org.apache.commons.io.IOUtils;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 /**
  * @author Jzy.

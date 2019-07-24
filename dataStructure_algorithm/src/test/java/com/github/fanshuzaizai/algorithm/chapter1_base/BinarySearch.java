@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter1;
+package com.github.fanshuzaizai.algorithm.chapter1_base;
 
 import org.apache.commons.lang3.ArrayUtils;
 

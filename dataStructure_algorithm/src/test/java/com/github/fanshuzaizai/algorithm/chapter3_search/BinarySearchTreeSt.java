@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter3;
+package com.github.fanshuzaizai.algorithm.chapter3_search;
 
 /**
  * @author Jzy.
