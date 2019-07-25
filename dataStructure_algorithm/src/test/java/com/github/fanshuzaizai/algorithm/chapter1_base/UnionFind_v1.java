@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
+ * quick方法
+ *
  * @author Jzy.
  * @date 2019/7/5 14:30
  */
@@ -20,12 +22,14 @@ public class UnionFind_v1 {
     //分量id，以触点为id
     private int[] id;
 
+    //寻找的次数
     private int _count;
 
     public UnionFind_v1(int size) {
         if (size < 1) {
             throw new IllegalArgumentException();
         }
+        //初始化设置为 每个顶点的 连通分量都是他自己
         this.id = IntStream.range(0, size).toArray();
     }
 
@@ -51,7 +55,7 @@ public class UnionFind_v1 {
             return;
         }
 
-        //将p的 分量id  以及所有 相同的 改成 p
+        //遍历所有的顶点，将p的 分量id  以及所有 相同的 改成 p
         int old = id[p];
         _count++;
         for (int i = 0; i < id.length; i++) {

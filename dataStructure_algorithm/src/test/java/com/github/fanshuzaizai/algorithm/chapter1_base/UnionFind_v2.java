@@ -11,13 +11,18 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 /**
+ * 加权方法
+ * 树形结构
+ *
  * @author Jzy.
  * @date 2019/7/5 14:30
  */
 public class UnionFind_v2 {
 
-    //分量id，以触点为id
+    //分量id
     private int[] id;
+
+    //每个顶点所挂载的size，包括它自己（和tree一样）
     private int[] sz;
 
     private int _count;
@@ -48,6 +53,12 @@ public class UnionFind_v2 {
         return size;
     }
 
+    /**
+     * 树结构，从下往上找，直到找到根节点
+     *
+     * @param p
+     * @return
+     */
     public int find(int p) {
         int t;
         _count++;
@@ -63,14 +74,16 @@ public class UnionFind_v2 {
     }
 
     public void union(int p, int q) {
+        //p的分量id
         int pRoot = find(p);
+        //q的分量id
         int qRoot = find(q);
 
         if (p == q) {
             return;
         }
 
-        //如果p节点比q大,将q挂到p下面
+        //如果p节点比q大,将q挂到p下面,减少树的高度
         if (sz[pRoot] > sz[qRoot]) {
             id[qRoot] = pRoot;
             sz[pRoot] += sz[qRoot];

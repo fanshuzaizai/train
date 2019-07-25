@@ -30,6 +30,7 @@ public class DepthFirstSearch implements Search, Path {
         int vertexSize = graph.vertexSize();
         connectedArr = new boolean[vertexSize];
         edgeTo = new int[vertexSize];
+        //第一个顶点，自联通
         dfs(graph, source);
     }
 
@@ -46,6 +47,7 @@ public class DepthFirstSearch implements Search, Path {
         //递归访问其他与之联通的顶点
         for (Integer i : connectedVertexes) {
             if (!connectedArr[i]) {
+                //如果顶点i还没有被访问过，则连接i的顶点就是当前的v
                 edgeTo[i] = v;
                 dfs(graph, i);
             }
@@ -70,12 +72,11 @@ public class DepthFirstSearch implements Search, Path {
 
         Stack<Integer> stack = new Stack<>();
 
-        stack.push(v);
+//        stack.push(v);
         do {
             v = edgeTo[v];
             stack.push(v);
         } while (v != source);
-//        stack.push(v);
         return stack;
     }
 }

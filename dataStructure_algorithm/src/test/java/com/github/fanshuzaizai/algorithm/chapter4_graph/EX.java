@@ -7,7 +7,6 @@ import org.junit.runners.JUnit4;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
@@ -38,6 +37,18 @@ public class EX {
         for (Integer i = 0; i < v; i++) {
             System.out.println(dfs.pathTo(i));
         }
+        System.out.println("=============");
+        BreadthFirstSearch bfs = new BreadthFirstSearch(graph, 5);
+        for (Integer i = 0; i < v; i++) {
+            System.out.println(bfs.pathTo(i));
+        }
+
+        ConnectedComponent cc = new ConnectedComponent(graph);
+        System.out.println(cc.countCC());
+        System.out.println(cc.connected(0, 10));
+        System.out.println(cc.connected(12, 8));
+        System.out.println(cc.connected(9, 12));
+        System.out.println(cc.connected(2, 6));
     }
 
 }
