@@ -1,13 +1,6 @@
 package com.github.fanshuzaizai.algorithm.chapter4_graph;
 
 import com.github.fanshuzaizai.algorithm.chapter1_base.Bag;
-import org.apache.commons.io.IOUtils;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 
 /**
  * @author Jzy.

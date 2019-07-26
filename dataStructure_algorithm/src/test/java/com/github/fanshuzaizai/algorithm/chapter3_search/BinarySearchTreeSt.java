@@ -32,6 +32,11 @@ public class BinarySearchTreeSt<K extends Comparable<K>, V> {
         return n.right == null ? n : max(n.right);
     }
 
+    public boolean contains(K k) {
+        return get(k) != null;
+    }
+
+
     public V get(K k) {
         return get(root, k);
     }
@@ -128,6 +133,7 @@ public class BinarySearchTreeSt<K extends Comparable<K>, V> {
         if (k < currentNodeIndex) {//在左边节点中寻找
             return select(n.left, k);
         } else if (k > currentNodeIndex) {//在右边节点寻找
+            //右边的节点数量-左边和当前根
             return select(n.right, k - currentNodeIndex - 1);
         } else {//就是当前节点
             return n.k;
