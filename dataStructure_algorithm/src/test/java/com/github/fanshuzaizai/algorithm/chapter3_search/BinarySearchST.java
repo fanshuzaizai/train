@@ -45,6 +45,9 @@ public class BinarySearchST<K extends Comparable<K>, V> {
         return keys[i];
     }
 
+    public boolean contains(K k) {
+        return get(k) != null;
+    }
 
 
     public int size() {
@@ -62,7 +65,6 @@ public class BinarySearchST<K extends Comparable<K>, V> {
     }
 
     /**
-     *
      * <p>
      * 二分查找
      *

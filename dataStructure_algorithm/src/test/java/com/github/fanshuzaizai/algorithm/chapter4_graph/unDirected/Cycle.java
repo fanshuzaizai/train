@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.algorithm.chapter4_graph;
+package com.github.fanshuzaizai.algorithm.chapter4_graph.unDirected;
 
 /**
  * 有无环形（不考虑自环）

@@ -3,9 +3,15 @@ package com.github.fanshuzaizai.algorithm.chapter2_sort;
 import com.github.fanshuzaizai.dataStructure_algorithm.ArrayUtil;
 
 import java.util.Arrays;
+import java.util.PriorityQueue;
 import java.util.Random;
 
 /**
+ * 二叉堆
+ * 优先队列
+ * <p>
+ * {@link PriorityQueue}
+ *
  * @author Jzy.
  * @date 2019/7/17 9:12
  */
@@ -21,7 +27,12 @@ public class BinaryHeap {
      */
     private int N;
 
+    public BinaryHeap(int size) {
+        this._arr = new Integer[size];
+    }
+
     public BinaryHeap() {
+        //todo 扩容
         this._arr = new Integer[1000];
     }
 
@@ -132,6 +143,14 @@ public class BinaryHeap {
     }
 
     public static void main(String[] args) {
+
+        PriorityQueue<Object> priorityQueue = new PriorityQueue<>();
+
+        if (true) {
+            return;
+        }
+
+
         int length = 20;
         Random random = new Random();
 

@@ -1,8 +1,10 @@
-package com.github.fanshuzaizai.algorithm.chapter4_graph;
+package com.github.fanshuzaizai.algorithm.chapter4_graph.unDirected;
 
 import java.util.Stack;
 
 /**
+ * 深度优先搜索
+ *
  * @author Jzy.
  * @date 2019/7/24 15:02
  */

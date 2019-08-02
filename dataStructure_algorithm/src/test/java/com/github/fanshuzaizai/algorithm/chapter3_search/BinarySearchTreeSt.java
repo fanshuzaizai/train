@@ -1,5 +1,7 @@
 package com.github.fanshuzaizai.algorithm.chapter3_search;
 
+import com.github.fanshuzaizai.algorithm.chapter1_base.Queue;
+
 /**
  * @author Jzy.
  * @date 2019/7/18 11:30
@@ -194,6 +196,41 @@ public class BinarySearchTreeSt<K extends Comparable<K>, V> {
         root = put(k, v, root);
     }
 
+    public Iterable<K> keys() {
+        return keys(min(), max());
+    }
+
+    /**
+     * [start,end]
+     *
+     * @param start
+     * @param end
+     * @return
+     */
+    public Iterable<K> keys(K start, K end) {
+        Queue<K> queue = new Queue<>();
+        keys(root, queue, start, end);
+        return queue;
+    }
+
+    private void keys(Node n, Queue<K> queue, K start, K end) {
+        if (n == null) {
+            return;
+        }
+        int s = start == null ? -1 : start.compareTo(n.k);
+        int e = end == null ? 1 : end.compareTo(n.k);
+
+        if (s < 0) {//开始范围小于当前值，继续去左边寻找
+            keys(n.left, queue, start, end);
+        }
+        if (s <= 0 && e >= 0) {//将当前k放入
+            queue.enqueue(n.k);
+        }
+        if (e > 0) {//开始范围大于当前值，继续去左边寻找
+            keys(n.right, queue, start, end);
+        }
+    }
+
     private Node put(K k, V v, Node n) {
 
         if (n == null) {
@@ -259,29 +296,8 @@ public class BinarySearchTreeSt<K extends Comparable<K>, V> {
         System.out.println(st.select(-1));
         System.out.println(st.select(100));
 
-        System.out.println(st.rank(100));
-        System.out.println(st.rank(13));
-        System.out.println(st.rank(14));
-        System.out.println(st.rank(1));
+        System.out.println(st.get(15));
+        System.out.println(st.get(13));
 
-
-        st.delete(13);
-        st.delete(15);
-
-        System.out.println(st.select(2));
-        System.out.println(st.select(3));
-
-        st.delete(15);
-        System.out.println(st.select(3));
-
-        st.delMin();
-        System.out.println(st.select(0));
-        System.out.println("====");
-        System.out.println(st.size());
-        System.out.println(st);
-        st.delMax();
-        System.out.println(st.size());
-        System.out.println(st.select(0));
-        System.out.println(st);
     }
 }

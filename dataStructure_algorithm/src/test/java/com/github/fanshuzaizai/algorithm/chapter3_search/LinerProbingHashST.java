@@ -8,7 +8,7 @@ import java.util.Arrays;
  * @author Jzy.
  * @date 2019/7/23 14:49
  */
-public class LinerProbingHashST<K extends Comparable<K>, V> {
+public class LinerProbingHashST<K, V> {
     private int size;
     private int initCapacity = 16;
     private Node<K, V>[] _arr;
@@ -97,6 +97,9 @@ public class LinerProbingHashST<K extends Comparable<K>, V> {
         }
     }
 
+    public boolean contains(K k) {
+        return get(k) != null;
+    }
 
     private int hash(K k) {
         return k.hashCode() & 0x7fffffff;

@@ -1,10 +1,14 @@
-package com.github.fanshuzaizai.algorithm.chapter4_graph;
+package com.github.fanshuzaizai.algorithm.chapter4_graph.unDirected;
 
 import com.github.fanshuzaizai.algorithm.chapter1_base.Queue;
 
+import java.util.Collections;
 import java.util.Stack;
 
 /**
+ * 广度优先搜索
+ * 求到个顶点的最短路径
+ *
  * @author Jzy.
  * @date 2019/7/25 16:14
  */
@@ -77,7 +81,7 @@ public class BreadthFirstSearch implements Search, Path {
     @Override
     public Iterable<Integer> pathTo(int v) {
         if (!connected(v)) {
-            return null;
+            return Collections.emptyList();
         }
 
         Stack<Integer> stack = new Stack<>();

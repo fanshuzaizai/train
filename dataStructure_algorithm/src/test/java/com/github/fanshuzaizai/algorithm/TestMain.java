@@ -1,5 +1,6 @@
 package com.github.fanshuzaizai.algorithm;
 
+import com.github.fanshuzaizai.algorithm.chapter1_base.Stack;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -50,5 +51,20 @@ public class TestMain {
         System.out.println(a == aa);
         System.out.println(aa.equals(a));
         System.out.println(aa2 == aa);
+    }
+
+    @Test
+    public void test3() {
+        Stack<String> stack = new Stack<>();
+
+        stack.push("123");
+        stack.push("4");
+        stack.push("7");
+
+        for (String s : stack) {
+            System.out.println(s);
+        }
+
+
     }
 }
