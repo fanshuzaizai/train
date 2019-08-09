@@ -55,6 +55,7 @@ public class DirectedCycle {
                 return;
             } else if (!marked[i]) {
                 edgeTo[i] = v;
+                //递归访问
                 dfs(graph, i);
             } else if (onStack[i]) {//如果已经被标记，且在当前stack中，说明当前是一个环
                 cycle = new Queue<>();
