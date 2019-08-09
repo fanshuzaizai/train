@@ -1,5 +1,7 @@
 package com.github.fanshuzaizai.algorithm.chapter4_graph.directed.weighted;
 
+import java.util.Objects;
+
 /**
  * @author Jzy.
  * @date 2019/8/2 9:53
@@ -40,4 +42,18 @@ public class DirectedWeightedEdge implements Comparable<DirectedWeightedEdge> {
         return String.format("%d-%d %.2f", from, to, weight);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DirectedWeightedEdge)) return false;
+        DirectedWeightedEdge edge = (DirectedWeightedEdge) o;
+        return from == edge.from &&
+                to == edge.to &&
+                Double.compare(edge.weight, weight) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(from, to, weight);
+    }
 }

@@ -1,7 +1,7 @@
 package com.github.fanshuzaizai.algorithm.chapter4_graph.directed.weighted;
 
 import com.github.fanshuzaizai.algorithm.chapter1_base.Stack;
-import com.github.fanshuzaizai.algorithm.chapter4_graph.unDirected.weighted.PrimMST;
+import com.github.fanshuzaizai.algorithm.chapter4_graph.directed.Topological;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -10,23 +10,19 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.PriorityQueue;
 
 /**
- * 加权有向图 最短路径
- * <p>
- * 类似{@link PrimMST}
+ * 无环加权有向图 最 长 路径
+ * 利用 拓扑排序
  *
  * @author Jzy.
- * @date 2019/8/2 14:42
+ * @date 2019/8/2 17:15
  */
-public class DijkstraSP {
+public class AcyclicLongestPath {
 
     private final DirectedWeightedEdgeGraph graph;
 
     private final int source;
-
-    private PriorityQueue<DirectedWeightedEdge> pq = new PriorityQueue<>();
 
     //到对应顶点的权重
     private double[] weightTo;
@@ -34,26 +30,31 @@ public class DijkstraSP {
     //到对应顶点的前一个顶点
     private DirectedWeightedEdge[] edgeTo;
 
-    public DijkstraSP(DirectedWeightedEdgeGraph graph, int source) {
+    public AcyclicLongestPath(DirectedWeightedEdgeGraph graph, int source) {
         this.graph = graph;
         this.source = source;
         int vertexSize = graph.vertexSize();
         edgeTo = new DirectedWeightedEdge[vertexSize];
         weightTo = new double[vertexSize];
-        weightTo[source] = 0;
-        for (int i = 1; i < vertexSize; i++) {
-            weightTo[i] = Double.POSITIVE_INFINITY;
-        }
-        relax(graph, source);
 
-        while (!pq.isEmpty()) {
-            DirectedWeightedEdge minimum = pq.poll();
-            relax(graph, minimum.to());
+        for (int i = 0; i < vertexSize; i++) {
+            //无穷小
+            weightTo[i] = Double.NEGATIVE_INFINITY;
         }
+        weightTo[source] = 0;
+
+        //进行拓扑排序
+        Topological topological = new Topological(graph);
+        for (Integer integer : topological.order()) {
+            System.out.print(integer + ",");
+            //因为使用了拓扑排序，每条边只会放松一次
+            relax(graph, integer);
+        }
+        System.out.println();
     }
 
     /**
-     * 松弛边
+     * 放松边
      *
      * @param graph
      * @param v
@@ -62,15 +63,12 @@ public class DijkstraSP {
         Iterable<DirectedWeightedEdge> connectedVertexes = graph.connectedVertexes(v);
 
         for (DirectedWeightedEdge edge : connectedVertexes) {
-            //不能判断 mark[v]，因为之前最短路径可能会被新路径推翻
             int to = edge.to();
-            //通过当前边去目标顶点的权重
             double toWeightByCurrentEdge = weightTo[edge.from()] + edge.getWeight();
-            //如果历史值大于当前值，则替换
-            if (weightTo[to] > toWeightByCurrentEdge) {
+            //和最短是相反的，如果发现更长的线路，则替换
+            if (weightTo[to] < toWeightByCurrentEdge) {
                 weightTo[to] = toWeightByCurrentEdge;
                 edgeTo[to] = edge;
-                pq.add(edge);
             }
         }
     }
@@ -95,12 +93,11 @@ public class DijkstraSP {
     }
 
     public boolean hasPathTo(int v) {
-        return weightTo[v] < Double.POSITIVE_INFINITY;
+        return weightTo[v] > Double.NEGATIVE_INFINITY;
     }
 
     public static void main(String[] args) throws IOException {
-
-        FileInputStream fileInputStream = new FileInputStream(new File("E:\\迅雷下载\\algs4-data\\tinyEWD.txt"));
+        FileInputStream fileInputStream = new FileInputStream(new File("E:\\迅雷下载\\algs4-data\\tinyEWDAG.txt"));
         List<String> lines = IOUtils.readLines(fileInputStream, StandardCharsets.UTF_8);
 
         DirectedWeightedEdgeGraph graph = new DirectedWeightedEdgeGraph(Integer.parseInt(lines.get(0)));
@@ -111,12 +108,12 @@ public class DijkstraSP {
                 graph.addEdge(new DirectedWeightedEdge(Integer.valueOf(split[0]), Integer.valueOf(split[1]), Double.valueOf(split[2])));
             }
         });
-        DijkstraSP dijkstraSP = new DijkstraSP(graph, 0);
-        Iterable<DirectedWeightedEdge> iterable = dijkstraSP.pathTo(6);
+
+        AcyclicLongestPath acyclicShortestPath = new AcyclicLongestPath(graph, 5);
+        Iterable<DirectedWeightedEdge> iterable = acyclicShortestPath.pathTo(0);
         for (DirectedWeightedEdge edge : iterable) {
             System.out.println(edge);
         }
-
     }
 
 

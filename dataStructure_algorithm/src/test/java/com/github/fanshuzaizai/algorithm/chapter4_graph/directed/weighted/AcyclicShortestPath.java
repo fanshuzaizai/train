@@ -12,12 +12,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 /**
+ * 无环加权有向图 最短路径
  * 利用 拓扑排序
  *
  * @author Jzy.
  * @date 2019/8/2 17:15
  */
-public class AcyclicSP {
+public class AcyclicShortestPath {
 
     private final DirectedWeightedEdgeGraph graph;
 
@@ -29,23 +30,38 @@ public class AcyclicSP {
     //到对应顶点的前一个顶点
     private DirectedWeightedEdge[] edgeTo;
 
-    public AcyclicSP(DirectedWeightedEdgeGraph graph, int source) {
+    private int _enqueue;
+    private int _compare;
+
+    public AcyclicShortestPath(DirectedWeightedEdgeGraph graph, int source) {
         this.graph = graph;
         this.source = source;
         int vertexSize = graph.vertexSize();
         edgeTo = new DirectedWeightedEdge[vertexSize];
         weightTo = new double[vertexSize];
-        weightTo[source] = 0;
-        for (int i = 1; i < vertexSize; i++) {
+
+        //每个顶点到起点的距离 初始值无穷大
+        for (int i = 0; i < vertexSize; i++) {
             weightTo[i] = Double.POSITIVE_INFINITY;
         }
+        weightTo[source] = 0;
 
+        //进行拓扑排序
         Topological topological = new Topological(graph);
         for (Integer integer : topological.order()) {
+            System.out.print(integer + ",");
+            //因为使用了拓扑排序，每条边只会放松一次
             relax(graph, integer);
         }
+        System.out.println();
     }
 
+    /**
+     * 放松边
+     *
+     * @param graph
+     * @param v
+     */
     private void relax(DirectedWeightedEdgeGraph graph, int v) {
         Iterable<DirectedWeightedEdge> connectedVertexes = graph.connectedVertexes(v);
 
@@ -54,9 +70,11 @@ public class AcyclicSP {
             //通过当前边去目标顶点的权重
             double toWeightByCurrentEdge = weightTo[edge.from()] + edge.getWeight();
             //如果历史值大于当前值，则替换
+            _compare++;
             if (weightTo[to] > toWeightByCurrentEdge) {
                 weightTo[to] = toWeightByCurrentEdge;
                 edgeTo[to] = edge;
+                _enqueue++;
             }
         }
     }
@@ -97,9 +115,12 @@ public class AcyclicSP {
             }
         });
 
-        Topological topological = new Topological(graph);
-        for (Integer integer : topological.order()) {
-            System.out.println(integer);
+        AcyclicShortestPath acyclicShortestPath = new AcyclicShortestPath(graph, 0);
+        System.out.println(acyclicShortestPath._compare);//13
+        System.out.println(acyclicShortestPath._enqueue);
+        Iterable<DirectedWeightedEdge> iterable = acyclicShortestPath.pathTo(7);
+        for (DirectedWeightedEdge edge : iterable) {
+            System.out.println(edge);
         }
     }
 
