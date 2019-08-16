@@ -5,6 +5,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.TreeMap;
@@ -55,16 +56,16 @@ public class TestMain {
 
     @Test
     public void test3() {
-        Stack<String> stack = new Stack<>();
+        BigDecimal aa = new BigDecimal("0.741");
+        BigDecimal bb = new BigDecimal("1.366");
+        BigDecimal cc = new BigDecimal("0.995");
+        double a = 0.741;
+        double b = 1.366;
+        double c = 0.995;
+        double v = -Math.log(a) + -Math.log(b) + -Math.log(c);
+        System.out.println(v);
 
-        stack.push("123");
-        stack.push("4");
-        stack.push("7");
-
-        for (String s : stack) {
-            System.out.println(s);
-        }
-
+        System.out.println(aa.multiply(bb).multiply(cc).toPlainString());
 
     }
 }

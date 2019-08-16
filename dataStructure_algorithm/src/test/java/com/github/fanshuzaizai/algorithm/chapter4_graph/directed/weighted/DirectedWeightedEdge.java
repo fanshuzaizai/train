@@ -39,7 +39,7 @@ public class DirectedWeightedEdge implements Comparable<DirectedWeightedEdge> {
 
     @Override
     public String toString() {
-        return String.format("%d-%d %.2f", from, to, weight);
+        return String.format("%d-%d %.5f", from, to, weight);
     }
 
     @Override
