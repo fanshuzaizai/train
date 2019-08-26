@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.FutureTask;
+import java.util.concurrent.locks.LockSupport;
 
 /**
  * @author Jzy.
@@ -18,27 +19,34 @@ public class Test {
 
     public static void main(String[] args) throws InterruptedException {
 
+        Thread thread = new Thread(() -> {
+            System.out.println("子线程开始");
+            while (1 == 1) {
+                if (Thread.interrupted()) {
+                    System.out.println(true);
+                }else {
+                    System.out.println(false);
+                }
+            }
 
-        String s = String.valueOf("123");
-        String s2 = "123";
+        });
+        thread.start();
 
-        short a = 9999;
+        thread.interrupt();
+        if (true) {
+            return;
+        }
 
+        //查询是否中断，不会产生任何负面影响
+        boolean interrupted1 = Thread.currentThread().isInterrupted();
 
-        System.out.println(s == s2);
+        //查询线程是否中断，如果是中断的，则清除中断标记
+        boolean interrupted = Thread.interrupted();
 
-        String s3 = new String("123");
-        String s4 = new String("123");
+        //中断线程，如果处于阻塞(wait,sleep,join)状态，会抛出异常
+        Thread.currentThread().interrupt();
 
-        System.out.println(s2 == s3);
-        System.out.println(s3 == s4);
-
-        ConcurrentHashMap<Object, Object> map = new ConcurrentHashMap<>();
-        map.put(null, null);
-        map.get(null);
-
-
-        BitSet bitSet = new BitSet();
+        LockSupport.park();
     }
 
 }

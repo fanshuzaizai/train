@@ -8,6 +8,9 @@ package com.github.fanshuzaizai.interview.jvm.gc;
  */
 public class GCRoots {
 
+    /*
+    可达性分析，（有向图）
+     */
     public static void main(String[] args) {
 
 
