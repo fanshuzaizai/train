@@ -1,52 +1,35 @@
 package com.github.fanshuzaizai.interview;
 
-import sun.misc.VM;
-
-import java.lang.ref.SoftReference;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.FutureTask;
-import java.util.concurrent.locks.LockSupport;
-
 /**
  * @author Jzy.
  * @date 2019/8/15 9:47
  */
 public class Test {
 
+    public int a = 10;
+
+    public static void abc(){
+        String str1 = "123";  // 字面两直接赋值
+        String str2 = new String("123"); // 调用字符串构造方法生成对象
+        String str3 = str1 + str2;
+        final String str4 = "123";
+        final String str5 = "456";
+        String  str6 = str4 + str5;
+
+    }
 
     public static void main(String[] args) throws InterruptedException {
+        // #1
+        String str1 = new String("1") + new String("1");
+        str1.intern();
+        String str2 = "11";
+// 不知道为什么不是指向同一个引用
+        System.out.println(str1 == str2); //  false，
+// 两个变量的hashCode也是相等的
+        System.out.println(str1.hashCode() == str2.hashCode()); // true
+        System.out.println(str1.equals(str2)); // true
 
-        Thread thread = new Thread(() -> {
-            System.out.println("子线程开始");
-            while (1 == 1) {
-                if (Thread.interrupted()) {
-                    System.out.println(true);
-                }else {
-                    System.out.println(false);
-                }
-            }
 
-        });
-        thread.start();
-
-        thread.interrupt();
-        if (true) {
-            return;
-        }
-
-        //查询是否中断，不会产生任何负面影响
-        boolean interrupted1 = Thread.currentThread().isInterrupted();
-
-        //查询线程是否中断，如果是中断的，则清除中断标记
-        boolean interrupted = Thread.interrupted();
-
-        //中断线程，如果处于阻塞(wait,sleep,join)状态，会抛出异常
-        Thread.currentThread().interrupt();
-
-        LockSupport.park();
     }
 
 }

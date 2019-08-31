@@ -15,15 +15,30 @@ public class Example {
         1.编译器将 Cat.java 文件编译成 Cat.class 字节码文件
         2.classLoader根据字节码文件生成一个 Class<Cat> 的类对象
             加载
-            1)生成 Class<Cat>类对象
+                1)生成 Class<Cat>类对象
             链接
-            2)检查类对象的安全性和正确性
-            3)分配内存空间，初始化静态变量，执行静态代码块
-            4)将常量池中符号引用改为直接引用
-        3.再根据用户代码使用  Class<Cat>类对象 实例化 Cat对象
+                2)检查类对象的安全性和正确性
+                3)为静态变量分配内存空间，初始默认值
+                    ①如果是 static 变量，则赋予其该类型的默认值（int=0，boolean=false），而不是字面赋予的值
+                    ②如果是 static final 变量，则赋予其字面量
+                4)将常量池中符号引用改为直接引用
+        3.初始化
+            如果没有加载和链接，那么先执行上面步骤
+            如果父类没有初始化，则先初始化父类
+            1)步骤
+                执行static静态代码块
+                为 static 变量赋予字面值
+                为普通变量赋予对应类型的默认值
+            2)时机
+                new 对象
+                调用静态方法，静态属性
+                反射（ Class.forName("") ）
+                初始化某个子类，那么父类也会被初始化
+                被标记为启动类的类
+        4.再根据用户代码使用  Class<Cat>类对象 实例化 Cat对象
 
     ClassLoad种类
-        1.BootStrapClassLoader
+        1.BootStrapClassLoader 由c++实现
             jre/lib/rt.jar或-Xbootclasspath制定的位置
 
         2.ExtClassLoader
@@ -55,8 +70,8 @@ public class Example {
         Class<?> aClass = Class.forName("com.github.fanshuzaizai.interview.classLoad.Cat", false, ClassLoader.getSystemClassLoader());
         System.out.println(aClass);
         Constructor<?> constructor = aClass.getConstructor(int.class);
-        Cat o = (Cat) constructor.newInstance(10);
-        System.out.println(o);
+//        Cat o = (Cat) constructor.newInstance(10);
+//        System.out.println(o);
 //
 //        ClassLoader classLoader = Launcher.getLauncher().getClassLoader();
 //        Class<?> aClass1 = classLoader.loadClass("com.github.fanshuzaizai.interview.classLoad.Cat");
@@ -76,7 +91,7 @@ public class Example {
 
         System.out.println("=====22222222");
 
-        CustomClassLoader customClassLoader = new CustomClassLoader();
+        CustomClassLoader customClassLoader = new CustomClassLoader("123");
         ClassLoader parent = customClassLoader.getParent();
         while (parent != null) {
             System.out.println(parent);

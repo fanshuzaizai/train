@@ -2,10 +2,7 @@ package com.github.fanshuzaizai.interview.jvm.gc;
 
 public class Pattern {
     /*
-
-    jvm heap 堆内存分配空间
-
-    区域：
+    jvm 堆内存区域：
         新生代（1/3），其中又包括 Eden（8/10）、survivor0（1/10）、survivor1（1/10）
 
         老年代turned（2/3）

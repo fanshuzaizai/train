@@ -1,5 +1,8 @@
 package com.github.fanshuzaizai.interview.concurrent.lock;
 
+import java.util.ArrayList;
+import java.util.UUID;
+import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -41,7 +44,18 @@ public class DeadLockDemo {
 
         DeadLockDemo deadLockDemo = new DeadLockDemo();
 
-        ExecutorService executorService = Executors.newFixedThreadPool(2);
+        Vector<String> list = new Vector<>();
+
+        int a = 10000000;
+
+        for (int i = 0; i < a; i++) {
+            list.add(UUID.randomUUID().toString());
+            if (i % 1000000 == 0) {
+                System.out.println(i);
+            }
+        }
+
+        System.out.println("list over");
 
         new Thread(() -> {
             deadLockDemo.lock_2();
