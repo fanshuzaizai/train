@@ -2,6 +2,7 @@ package com.github.fanshuzaizai.algorithm.chapter2_sort;
 
 /**
  * 归并排序
+ * 将数组递归拆分成2个有序数组，再每次将2个数组中最小的元素加入到原始数组中
  *
  * @author Jzy.
  * @date 2019/7/12 11:29
@@ -36,8 +37,6 @@ public class MergeSort {
         int length = end - start + 1;
         //创造一个原始数组的拷贝
         System.arraycopy(arr, start, aux, start, length);
-
-//        System.out.println(String.format("开始排序 ,start:%d,mid:%d,end:%d,原始数组:%s", start, mid, end, Arrays.toString(arr)));
 
         /*
            第1个数组 start - mid

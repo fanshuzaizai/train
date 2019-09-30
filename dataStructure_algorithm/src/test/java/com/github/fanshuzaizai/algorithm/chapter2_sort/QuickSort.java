@@ -11,15 +11,8 @@ import com.github.fanshuzaizai.dataStructure_algorithm.ArrayUtil;
  */
 public class QuickSort {
 
-    static int _count = 0;
-    static int _exchange = 0;
-
     public static void sort(int[] arr) {
-        _count = 0;
-        _exchange = 0;
         sort(arr, 0, arr.length - 1);
-
-//        System.out.println("count:" + _count + " exchange:" + _exchange);
     }
 
     private static void sort(int[] arr, int start, int end) {
@@ -48,16 +41,14 @@ public class QuickSort {
         int right = end + 1;
 
         while (true) {
-            //从左往右，开始找 大于 分界值 的元素
+            //从左往右，找出1个 > midVal 的元素
             while (arr[++left] < midVal) {//使用==会在只有几个值的情况下造成 指数级别 的消耗
-//                _count++;
                 if (left == end) {
                     break;
                 }
             }
-            //从右往左，开始找 小于 分界值 的元素
+            //从右往左，找出1个 < midVal 的元素
             while (arr[--right] > midVal) {
-//                _count++;
                 //冗余的
                 if (right == start) {
                     break;
@@ -67,13 +58,11 @@ public class QuickSort {
             if (left >= right) {
                 break;
             }
+            //交换这两个值
             ArrayUtil.exchange(arr, left, right);
-//            _exchange++;
         }
 
         ArrayUtil.exchange(arr, start, right);
-//        _exchange++;
-//        System.out.println(Math.abs(right-left));
         return right;
     }
 

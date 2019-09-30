@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>dataStructure_algorithm</module>
+        <module>interview</module>
     </modules>
 
     <dependencies>
@@ -38,6 +39,14 @@
             <artifactId>spring-core</artifactId>
             <version>4.2.3.RELEASE</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.typesafe.akka/akka-actor -->
+        <dependency>
+            <groupId>com.typesafe.akka</groupId>
+            <artifactId>akka-actor_2.13</artifactId>
+            <version>2.6.0-M7</version>
+        </dependency>
+
 
         <!--<dependency>
             <groupId>org.springframework</groupId>

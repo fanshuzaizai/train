@@ -1,6 +1,8 @@
 package com.github.fanshuzaizai.algorithm.chapter2_sort;
 
 /**
+ * 插入排序，从index(i)开始，往前遍历，找到小于等于自己的元素，然后放在该位置上，后面的元素都后移一位
+ *
  * @author Jzy.
  * @date 2019/7/12 11:06
  */

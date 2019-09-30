@@ -3,6 +3,8 @@ package com.github.fanshuzaizai.algorithm.chapter2_sort;
 import com.github.fanshuzaizai.dataStructure_algorithm.ArrayUtil;
 
 /**
+ * 选择排序，每次从index(i)开始便利，从后面所有的元素中，找出最小的放在i位置上
+ *
  * @author Jzy.
  * @date 2019/7/12 11:07
  */
