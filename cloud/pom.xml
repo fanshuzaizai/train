@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>train</artifactId>
+        <groupId>com.github.fanshuzaizai</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>cloud</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>eureka-server</module>
+        <module>trade</module>
+        <module>user</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-boot.version>2.0.5.RELEASE</spring-boot.version>
+        <spring-cloud.version>Finchley.SR1</spring-cloud.version>
+        <mapper-spring-boot-starter.version>2.0.4</mapper-spring-boot-starter.version>
+        <pagehelper-spring-boot-starter.version>1.2.5</pagehelper-spring-boot-starter.version>
+        <apollo-client.version>1.1.0</apollo-client.version>
+        <springfox-swagger2.version>2.6.1</springfox-swagger2.version>
+        <springfox-swagger-ui.version>2.6.1</springfox-swagger-ui.version>
+        <com-alibaba-druid.version>1.0.29</com-alibaba-druid.version>
+        <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
+        <spring-boot-maven-plugin>2.0.6.RELEASE</spring-boot-maven-plugin>
+        <persistence-api.version>1.0</persistence-api.version>
+        <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
+        <maven-compiler-plugin>3.8.0</maven-compiler-plugin>
+        <hutool-all.version>4.1.19</hutool-all.version>
+        <java-jwt.version>3.4.1</java-jwt.version>
+        <redisson-spring-boot-starter.version>3.8.2</redisson-spring-boot-starter.version>
+        <jodd-core.version>5.0.6</jodd-core.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <!--rpc调用组件 feign-->
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <!--断路器 hystrix-->
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+
+        <dependency>
+            <!--断路器 hystrix-->
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-ribbon</artifactId>
+        </dependency>
+
+        <dependency>
+            <!--测试包-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <!--spring boot-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <!--web-->
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <!--lombok-->
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>${persistence-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector-java.version}</version>
+        </dependency>
+
+
+    </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <!-- Import dependency management from Spring Cloud -->
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <!--打包跳过TEST-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skipTests>true</skipTests>
+                </configuration>
+            </plugin>
+
+            <!--  <plugin>
+                  <groupPath>org.springframework.boot</groupPath>
+                  <artifactId>spring-boot-maven-plugin</artifactId>
+              </plugin>-->
+        </plugins>
+    </build>
+
+</project>

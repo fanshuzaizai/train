@@ -1,7 +1,6 @@
 package com.github.fanshuzaizai.interview.classLoad;
 
 import com.sun.deploy.uitoolkit.DelegatingPluginUIToolkit;
-import com.sun.java.accessibility.AccessBridge;
 import sun.misc.Launcher;
 
 import java.lang.reflect.Constructor;
@@ -86,7 +85,6 @@ public class Example {
 
         System.out.println(Launcher.class.getClassLoader());
         System.out.println(DelegatingPluginUIToolkit.class.getClassLoader());
-        System.out.println(AccessBridge.class.getClassLoader());
 
         System.out.println("=====22222222");
 
