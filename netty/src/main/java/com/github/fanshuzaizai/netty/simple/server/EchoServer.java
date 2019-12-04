@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.socket.de_en_coder.simple.server;
+package com.github.fanshuzaizai.netty.simple.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -21,6 +21,9 @@ public class EchoServer {
     }
 
     public static void main(String[] args) throws Exception {
+        System.err.println(
+                "Usage: " + EchoServer.class.getSimpleName() +
+                        " <port>");
         new EchoServer(8000).start();
     }
 
@@ -43,7 +46,7 @@ public class EchoServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) {
-                            ch.pipeline().addLast( new ToIntegerDecoder(),serverHandler);
+                            ch.pipeline().addLast(serverHandler);
 
                         }
                     });

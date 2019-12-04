@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.socket.de_en_coder.simple.server;
+package com.github.fanshuzaizai.netty.de_en_coder.simple.server;
 
 import io.netty.channel.*;
 

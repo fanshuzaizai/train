@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.socket.simple.client;
+package com.github.fanshuzaizai.netty.de_en_coder.simple.client;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
@@ -37,7 +37,7 @@ public class EchoClient {
                         public void initChannel(SocketChannel ch)
                                 throws Exception {
                             //按顺序添加ChannelHandler，入站会从1/2/3开始执行，出站会从5/4/3开始执行
-                            ch.pipeline().addLast(clientHandler);
+                            ch.pipeline().addLast(new IntegerToByteEncoder(), clientHandler);
 
                         }
                     });

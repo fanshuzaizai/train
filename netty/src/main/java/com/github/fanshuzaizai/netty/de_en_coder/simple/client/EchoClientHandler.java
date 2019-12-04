@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.socket.de_en_coder.simple.client;
+package com.github.fanshuzaizai.netty.de_en_coder.simple.client;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;

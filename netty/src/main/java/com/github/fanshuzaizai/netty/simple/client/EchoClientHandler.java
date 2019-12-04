@@ -1,4 +1,4 @@
-package com.github.fanshuzaizai.socket.simple.client;
+package com.github.fanshuzaizai.netty.simple.client;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
