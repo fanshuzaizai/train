@@ -8,6 +8,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.logging.LogLevel;
+import io.netty.handler.logging.LoggingHandler;
 import io.netty.util.AttributeKey;
 
 import java.net.InetSocketAddress;
@@ -36,6 +38,7 @@ public class EchoServer {
             ServerBootstrap b = new ServerBootstrap();//服务端引导类
             b.group(parentGroup, childGroup)
                     .channel(NioServerSocketChannel.class)
+                    .handler(new LoggingHandler(LogLevel.INFO))
 //                    .option()
                     .localAddress(new InetSocketAddress(port))
                     //当一个新的连接 被接受时，一个新的子 Channel 将会被创建，
@@ -43,7 +46,7 @@ public class EchoServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) {
-                            ch.pipeline().addLast( new ToIntegerDecoder(),serverHandler);
+                            ch.pipeline().addLast(new ToIntegerDecoder(), serverHandler);
 
                         }
                     });

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<definitions id="definitions"
+             targetNamespace="http://activiti.org/bpmn20"
+             xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:activiti="http://activiti.org/bpmn">
+
+    <!--结束标记-->
+    <signal id="cancelApplication" name="cancelApplication"/>
+
+    <process id="hireProcess" name="Developer Hiring">
+
+        <startEvent id="theStart"/>
+
+        <sequenceFlow id='flow1' sourceRef='theStart' targetRef='validateArgs'/>
+
+        <!--验证参数-->
+        <serviceTask id="validateArgs" name="validate args" activiti:class="com.github.fanshuzaizai.activiti.support.ValidateService"/>
+
+        <sequenceFlow id='flow2' sourceRef='validateArgs' targetRef='selectHandlers'/>
+
+        <!--查询任务节点-->
+        <serviceTask id="selectHandlers" name="查询所有的处理人"
+                     activiti:class="com.github.fanshuzaizai.activiti.support.SelectHandlersService"/>
+
+        <sequenceFlow id='flow3' sourceRef='selectHandlers' targetRef='isHaveNextHandler'/>
+
+        <!--条件分支-是否有处理人-->
+        <exclusiveGateway id="isHaveNextHandler" name="是否有处理人"/>
+
+        <!--有处理人-->
+        <sequenceFlow id="ifHaveAssignees_true" sourceRef="isHaveNextHandler" targetRef="handle">
+            <conditionExpression xsi:type="tFormalExpression">${handleRecord.haveNext()}</conditionExpression>
+        </sequenceFlow>
+
+        <!-- 没有处理人->结束 -->
+        <sequenceFlow id="ifHaveAssignees_no" sourceRef="isHaveNextHandler" targetRef="theEnd">
+            <conditionExpression xsi:type="tFormalExpression">${!handleRecord.haveNext()}</conditionExpression>
+        </sequenceFlow>
+
+        <!--创建审批任务-->
+        <userTask id="handle" name="assignee handle">
+            <extensionElements>
+                <activiti:taskListener event="create" class="com.github.fanshuzaizai.activiti.support.CustomTaskListener"/>
+            </extensionElements>
+        </userTask>
+
+        <sequenceFlow id="flow4" sourceRef="handle" targetRef="isHaveNextHandler"/>
+
+        <endEvent id="theEnd"/>
+
+    </process>
+
+
+</definitions>

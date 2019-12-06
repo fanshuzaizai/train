@@ -1,0 +1,15 @@
+server:
+  port: 7777
+
+spring:
+  application:
+    name: market
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 118.24.124.169:8847,118.24.124.169:8848,118.24.124.169:8849
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
