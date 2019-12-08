@@ -11,6 +11,7 @@ public class EchoServerHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        ctx.channel().eventLoop().execute(null);
         System.out.println("Server ..被断开了");
     }
 

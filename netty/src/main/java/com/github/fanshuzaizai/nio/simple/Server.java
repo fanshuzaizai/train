@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
 import java.nio.channels.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 
 /**
@@ -13,6 +14,10 @@ import java.util.Iterator;
 public class Server {
 
     public static void main(String[] args) throws IOException {
+
+        ArrayList<Object> arrayList = new ArrayList<>();
+        Iterator<Object> iterator = arrayList.iterator();
+
 
         Selector selector = Selector.open();
 

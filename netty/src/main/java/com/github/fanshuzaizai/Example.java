@@ -2,60 +2,29 @@ package com.github.fanshuzaizai;
 
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufProcessor;
-import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
-import io.netty.util.ByteProcessor;
-import io.netty.util.CharsetUtil;
-import io.netty.util.ReferenceCountUtil;
+import io.netty.channel.group.DefaultChannelGroup;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.util.concurrent.GlobalEventExecutor;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
-import static io.netty.util.ByteProcessor.FIND_NUL;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class Example {
 
 
     public static void main(String[] args) {
 
-        ReferenceCountUtil.release(null);
+        ByteBuf hello = Unpooled.copiedBuffer("张三", StandardCharsets.UTF_8);
+        System.out.println(hello);
+        byte[] bytes = hello.array();
+        System.out.println(Arrays.toString(bytes));
+
+        StringDecoder stringDecoder = new StringDecoder();
 
 
-        ByteBuf byteBuf = Unpooled.copiedBuffer("Netty rocks!",
-                CharsetUtil.UTF_8);
-
-
-
-
-        int capacity = byteBuf.capacity();
-        int i = byteBuf.maxCapacity();
-
-        byteBuf.duplicate();
-        ByteBuf copy = byteBuf.copy();
-        byteBuf.slice();
-
-        byte aByte = byteBuf.getByte(1);
-        ByteProcessor findNul = FIND_NUL;
-
-
-        Timer timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-
-            }
-        },1000);
-
-        ScheduledThreadPoolExecutor scheduledExecutorService = (ScheduledThreadPoolExecutor) Executors.newScheduledThreadPool(10);
-
-        scheduledExecutorService.schedule(()->{
-
-        },1000, TimeUnit.MILLISECONDS);
+        DefaultChannelGroup channels = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
+        channels.writeAndFlush(1);
 
 
     }
