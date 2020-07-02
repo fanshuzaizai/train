@@ -29,7 +29,7 @@
         <springfox-swagger2.version>2.6.1</springfox-swagger2.version>
         <springfox-swagger-ui.version>2.6.1</springfox-swagger-ui.version>
         <com-alibaba-druid.version>1.0.29</com-alibaba-druid.version>
-        <mysql-connector-java.version>5.1.47</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.16</mysql-connector-java.version>
         <spring-boot-maven-plugin>2.0.6.RELEASE</spring-boot-maven-plugin>
         <persistence-api.version>1.0</persistence-api.version>
         <maven-surefire-plugin.version>2.22.1</maven-surefire-plugin.version>
